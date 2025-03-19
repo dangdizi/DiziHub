@@ -13,8 +13,8 @@ local TweenService = game:GetService("TweenService")
 function Dizi:new()
     local self = setmetatable({}, Dizi)
 
-    self.width = 500
-    self.height = 300
+    self.width = 400
+    self.height = 250
     self.tabWidth = 120
     self.headerHeight = 40
     self.logoSize = 30
@@ -43,15 +43,40 @@ function Dizi:new()
     MiniIcon.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
     MiniIcon.Parent = nil
 
-    MiniIcon.MouseButton1Click:Connect(function()
-        self.mainFrame.Parent = gui
-        local newSize = UDim2.new(0, self.width, 0, self.height)
-        local newPosition = UDim2.new(0.5, -self.width/2, 0.5, -self.height/2)
-        self:tweenUI(self.mainFrame, newPosition, newSize, nil, 0.2)
+    -- kiểm tra sự kiện
+    -- MiniIcon.MouseButton1Click:Connect(function()
+    --     self.mainFrame.Parent = gui
+    --     local newSize = UDim2.new(0, self.width, 0, self.height)
+    --     local newPosition = UDim2.new(0.5, -self.width/2, 0.5, -self.height/2)
+    --     self:tweenUI(self.mainFrame, newPosition, newSize, nil, 0.2)
 
-        self:tweenUI(MiniIcon, nil, UDim2.new(0, 0, 0, 0), nil, 0.2)
-        wait(0.2)
-        MiniIcon.Parent = nil
+    --     self:tweenUI(MiniIcon, nil, UDim2.new(0, 0, 0, 0), nil, 0.2)
+    --     wait(0.2)
+    --     MiniIcon.Parent = nil
+    -- end)
+
+    local dragStartPos
+
+    MiniIcon.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragStartPos = input.Position
+        end
+    end)
+
+    MiniIcon.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            local movedDistance = (input.Position - dragStartPos).magnitude
+            if movedDistance < 10 then -- Nếu không kéo quá xa thì tính là bấm
+                self.mainFrame.Parent = gui
+                local newSize = UDim2.new(0, self.width, 0, self.height)
+                local newPosition = UDim2.new(0.5, -self.width / 2, 0.5, -self.height / 2)
+                self:tweenUI(self.mainFrame, newPosition, newSize, nil, 0.2)
+
+                self:tweenUI(MiniIcon, nil, UDim2.new(0, 0, 0, 0), nil, 0.2)
+                wait(0.2)
+                MiniIcon.Parent = nil
+            end
+        end
     end)
 
     local MiniIconRounded = Instance.new("UICorner")
@@ -61,7 +86,7 @@ function Dizi:new()
     local MiniImage = Instance.new("ImageLabel")
     MiniImage.Image = self.logo
     MiniImage.Size = UDim2.new(0, 35, 0, 35)
-    MiniImage.Position = UDim2.new(0.5, -35/2, 0.5, -35/2)
+    MiniImage.Position = UDim2.new(0.5, -35 / 2, 0.5, -35 / 2)
     MiniImage.BackgroundTransparency = 1
     MiniImage.Parent = MiniIcon
 
@@ -91,7 +116,7 @@ function Dizi:new()
     -- tạo logo header
     local logoImage = Instance.new("ImageLabel")
     logoImage.Size = UDim2.new(0, self.logoSize, 0, self.logoSize)
-    logoImage.Position = UDim2.new(0, 10, 0.5, -self.logoSize/2-1)
+    logoImage.Position = UDim2.new(0, 10, 0.5, -self.logoSize / 2 - 1)
     logoImage.Image = self.logo
     logoImage.BackgroundTransparency = 1
     logoImage.BorderSizePixel = 0
@@ -101,8 +126,8 @@ function Dizi:new()
     -- tạo title cho header
     local titleLabel = Instance.new("TextLabel")
     titleLabel.Text = self.title
-    titleLabel.Size = UDim2.new(1, -self.logoSize-20, 1, 0)
-    titleLabel.Position = UDim2.new(0,self.logoSize+15,0,0)
+    titleLabel.Size = UDim2.new(1, -self.logoSize - 20, 1, 0)
+    titleLabel.Position = UDim2.new(0, self.logoSize + 15, 0, 0)
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
     titleLabel.BackgroundTransparency = 1
     titleLabel.BorderSizePixel = 0
@@ -112,11 +137,10 @@ function Dizi:new()
     titleLabel.Parent = headerFrame
     self.titleLabel = titleLabel
 
-
     -- tạo nút close
     local closeBtn = Instance.new("ImageButton")
     closeBtn.Size = UDim2.new(0, 20, 0, 20)
-    closeBtn.Position =  UDim2.new(1, -30, 0.5, -10)
+    closeBtn.Position = UDim2.new(1, -30, 0.5, -10)
     closeBtn.BackgroundTransparency = 1
     closeBtn.BorderSizePixel = 0
     closeBtn.Parent = headerFrame
@@ -128,7 +152,7 @@ function Dizi:new()
     local closeBtnImage = Instance.new("ImageLabel")
     closeBtnImage.Image = self.closeIcon
     closeBtnImage.Size = UDim2.new(0, 18, 0, 18)
-    closeBtnImage.Position = UDim2.new (0.5, -9, 0.5, -9)
+    closeBtnImage.Position = UDim2.new(0.5, -9, 0.5, -9)
     closeBtnImage.BackgroundTransparency = 1
     closeBtnImage.BorderSizePixel = 0
     closeBtnImage.ImageTransparency = 0.2
@@ -137,7 +161,7 @@ function Dizi:new()
     -- tạo nút max button
     local maxBtn = Instance.new("ImageButton")
     maxBtn.Size = UDim2.new(0, 20, 0, 20)
-    maxBtn.Position =  UDim2.new(1, -60, 0.5, -10)
+    maxBtn.Position = UDim2.new(1, -60, 0.5, -10)
     maxBtn.BackgroundTransparency = 1
     maxBtn.BorderSizePixel = 0
     maxBtn.Parent = headerFrame
@@ -146,12 +170,12 @@ function Dizi:new()
     maxBtn.MouseButton1Click:Connect(function()
         if maxStatus then
             local newSize = UDim2.new(0, self.width, 0, self.height)
-            local newPosition = UDim2.new(0.5, -self.width/2, 0.5, -self.height/2)
+            local newPosition = UDim2.new(0.5, -self.width / 2, 0.5, -self.height / 2)
             self:tweenUI(mainFrame, newPosition, newSize, nil, 0.2)
             maxStatus = false
         else
             local newSize = UDim2.new(0, self.width + 100, 0, self.height + 100)
-            local newPosition = UDim2.new(0.5, -(self.width + 100)/2, 0.5, -(self.height + 100)/2)
+            local newPosition = UDim2.new(0.5, -(self.width + 100) / 2, 0.5, -(self.height + 100) / 2)
             self:tweenUI(mainFrame, newPosition, newSize, nil, 0.2)
             maxStatus = true
         end
@@ -160,7 +184,7 @@ function Dizi:new()
     local maxBtnImage = Instance.new("ImageLabel")
     maxBtnImage.Image = self.maxIcon
     maxBtnImage.Size = UDim2.new(0, 18, 0, 18)
-    maxBtnImage.Position = UDim2.new (0.5, -9, 0.5, -9)
+    maxBtnImage.Position = UDim2.new(0.5, -9, 0.5, -9)
     maxBtnImage.BackgroundTransparency = 1
     maxBtnImage.BorderSizePixel = 0
     maxBtnImage.ImageTransparency = 0.2
@@ -169,7 +193,7 @@ function Dizi:new()
     -- tạo nút min button
     local minBtn = Instance.new("ImageButton")
     minBtn.Size = UDim2.new(0, 20, 0, 20)
-    minBtn.Position =  UDim2.new(1, -90, 0.5, -10)
+    minBtn.Position = UDim2.new(1, -90, 0.5, -10)
     minBtn.BackgroundTransparency = 1
     minBtn.BorderSizePixel = 0
     minBtn.Parent = headerFrame
@@ -187,16 +211,16 @@ function Dizi:new()
     local minBtnImage = Instance.new("ImageLabel")
     minBtnImage.Image = self.minIcon
     minBtnImage.Size = UDim2.new(0, 18, 0, 18)
-    minBtnImage.Position = UDim2.new (0.5, -9, 0.5, -9)
+    minBtnImage.Position = UDim2.new(0.5, -9, 0.5, -9)
     minBtnImage.BackgroundTransparency = 1
     minBtnImage.BorderSizePixel = 0
     minBtnImage.ImageTransparency = 0.2
     minBtnImage.Parent = minBtn
-    
+
     -- tạo body frame
     local bodyFrame = Instance.new("Frame")
-    bodyFrame.Size = UDim2.new(1, 0, 1, -self.headerHeight+1)
-    bodyFrame.Position = UDim2.new(0, 0, 0, self.headerHeight+1)
+    bodyFrame.Size = UDim2.new(1, 0, 1, -self.headerHeight + 1)
+    bodyFrame.Position = UDim2.new(0, 0, 0, self.headerHeight + 1)
     bodyFrame.BackgroundTransparency = 1
     bodyFrame.BorderSizePixel = 0
     bodyFrame.Parent = mainFrame
@@ -205,20 +229,20 @@ function Dizi:new()
     -- tạo tab frame
     local tabFrame = Instance.new("ScrollingFrame")
     tabFrame.Size = UDim2.new(0, self.tabWidth, 1, 0)
-    tabFrame.CanvasSize = UDim2.new(0,0,0,0)
+    tabFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
     tabFrame.BackgroundColor3 = Color3.new(0, 0, 0)
     tabFrame.BackgroundTransparency = 0.6
     tabFrame.BorderSizePixel = 0
     tabFrame.ScrollBarThickness = 0
     tabFrame.Parent = bodyFrame
     self.tabFrame = tabFrame
-    
+
     local tabFrameList = Instance.new("UIListLayout")
     tabFrameList.FillDirection = Enum.FillDirection.Vertical
     tabFrameList.Parent = tabFrame
     self.tabFrameList = tabFrameList
     self:setAutoCanvasSize(self.tabFrame, self.tabFrameList)
-    
+
     local tabFrameBorder = Instance.new("Frame")
     tabFrameBorder.Size = UDim2.new(0, 1, 1, 0)
     tabFrameBorder.Position = UDim2.new(0, self.tabWidth, 0, 0)
@@ -229,8 +253,8 @@ function Dizi:new()
 
     -- tạo action frame
     local actionFrame = Instance.new("Frame")
-    actionFrame.Size = UDim2.new(1, -self.tabWidth-2, 1, 0)
-    actionFrame.Position = UDim2.new(0, self.tabWidth+1, 0, 0)
+    actionFrame.Size = UDim2.new(1, -self.tabWidth - 2, 1, 0)
+    actionFrame.Position = UDim2.new(0, self.tabWidth + 1, 0, 0)
     actionFrame.BackgroundTransparency = 0.6
     actionFrame.BorderSizePixel = 0
     actionFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
@@ -259,11 +283,10 @@ function Dizi:setLogo(logo)
 end
 
 -- tạo tweenService
-function Dizi:tweenUI (frame, newPosition, newSize, newColor, duration)
-    local tweenInfo  = TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
+function Dizi:tweenUI(frame, newPosition, newSize, newColor, duration)
+    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
 
-    local data = {
-    }
+    local data = {}
 
     if newPosition then
         data.Position = newPosition
@@ -282,7 +305,7 @@ function Dizi:tweenUI (frame, newPosition, newSize, newColor, duration)
 end
 
 -- tự động tính toán canvas size
-function Dizi:setAutoCanvasSize (scroll, list)
+function Dizi:setAutoCanvasSize(scroll, list)
     scroll.CanvasSize = UDim2.new(0, 0, 0, list.AbsoluteContentSize.Y + 10)
     list:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
         scroll.CanvasSize = UDim2.new(0, 0, 0, list.AbsoluteContentSize.Y + 10)
@@ -290,7 +313,7 @@ function Dizi:setAutoCanvasSize (scroll, list)
 end
 
 -- tạo tab button
-function Dizi:createTab (icon, tabName, action)
+function Dizi:createTab(icon, tabName, action)
     local tabButton = Instance.new("ImageButton")
     tabButton.BorderSizePixel = 0
     tabButton.BackgroundTransparency = 1
@@ -308,7 +331,7 @@ function Dizi:createTab (icon, tabName, action)
     if icon then
         local tabImage = Instance.new("ImageLabel")
         tabImage.Size = UDim2.new(0, 12, 0, 12)
-        tabImage.Position = UDim2.new(0, 10, 0.5, -12/2)
+        tabImage.Position = UDim2.new(0, 10, 0.5, -12 / 2)
         tabImage.Image = icon
         tabImage.BackgroundTransparency = 1
         tabImage.BorderSizePixel = 0
@@ -331,26 +354,29 @@ function Dizi:createTab (icon, tabName, action)
     tabText.TextSize = 15
     tabText.Parent = tabButton
 
-    local tab = setmetatable({Tab = tabButton, Root = self}, Dizi)
+    local tab = setmetatable({
+        Tab = tabButton,
+        Root = self
+    }, Dizi)
     return tab
 end
 
 -- thêm action vào tab
-function Dizi:setAction (action)
+function Dizi:setAction(action)
     self.Tab.MouseButton1Click:Connect(function()
         action.Root:cleanAction(action.Root.actionFrame)
         action.Frame.Parent = action.Root.actionFrame
     end)
 end
 
-function Dizi:cleanAction (action)
+function Dizi:cleanAction(action)
     for _, frame in pairs(action:GetChildren()) do
         frame.Parent = nil
     end
 end
 
 -- tạo action
-function Dizi:createAction (default)
+function Dizi:createAction(default)
     local actionFrame = Instance.new("ScrollingFrame")
     actionFrame.Size = UDim2.new(1, 0, 1, 0)
     actionFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
@@ -365,7 +391,7 @@ function Dizi:createAction (default)
     local actionFrameList = Instance.new("UIListLayout")
     actionFrameList.FillDirection = Enum.FillDirection.Vertical
     actionFrameList.Parent = actionFrame
-    
+
     local action = setmetatable({
         Frame = actionFrame,
         List = actionFrameList,
@@ -375,7 +401,7 @@ function Dizi:createAction (default)
 end
 
 -- tạo text
-function Dizi:createText (text, color)
+function Dizi:createText(text, color)
     local textLabel = Instance.new("TextLabel")
     textLabel.Text = text
     textLabel.Size = UDim2.new(1, 0, 0, 20)
@@ -417,7 +443,7 @@ function Dizi:createLabel(text, color)
 end
 
 -- tạo toggle switch
-function Dizi:createToggleSwitch (label, callable)
+function Dizi:createToggleSwitch(label, callable)
     local textLabel = Instance.new("TextLabel")
     textLabel.Text = label
     textLabel.Size = UDim2.new(1, 0, 0, 20)
@@ -435,22 +461,22 @@ function Dizi:createToggleSwitch (label, callable)
 
     local toggleButton = Instance.new("ImageButton")
     toggleButton.Size = UDim2.new(0, 35, 0, 14)
-    toggleButton.Position = UDim2.new(1, -50, 0.5, -14/2)
+    toggleButton.Position = UDim2.new(1, -50, 0.5, -14 / 2)
     toggleButton.BackgroundColor3 = Color3.fromRGB(93, 93, 93)
     toggleButton.Parent = textLabel
 
     local rounded = Instance.new("UICorner")
-    rounded.CornerRadius = UDim.new(1,0)
+    rounded.CornerRadius = UDim.new(1, 0)
     rounded.Parent = toggleButton
 
     local toggleButtonDot = Instance.new("Frame")
     toggleButtonDot.Size = UDim2.new(0, 18, 0, 18)
-    toggleButtonDot.Position = UDim2.new(0, 0, 0.5, -18/2)
+    toggleButtonDot.Position = UDim2.new(0, 0, 0.5, -18 / 2)
     toggleButtonDot.BackgroundColor3 = Color3.fromRGB(35, 182, 69)
     toggleButtonDot.Parent = toggleButton
 
     local rounded = Instance.new("UICorner")
-    rounded.CornerRadius = UDim.new(1,0)
+    rounded.CornerRadius = UDim.new(1, 0)
     rounded.Parent = toggleButtonDot
 
     local storke = Instance.new("UIStroke")
@@ -461,11 +487,11 @@ function Dizi:createToggleSwitch (label, callable)
     local onStatus = false
     toggleButton.MouseButton1Click:Connect(function()
         if onStatus then
-            self.Root:tweenUI(toggleButtonDot, UDim2.new(0, 0, 0.5, -18/2), nil, nil, 0.2)
+            self.Root:tweenUI(toggleButtonDot, UDim2.new(0, 0, 0.5, -18 / 2), nil, nil, 0.2)
             self.Root:tweenUI(toggleButton, nil, nil, Color3.fromRGB(93, 93, 93), 0.2)
             onStatus = false
         else
-            self.Root:tweenUI(toggleButtonDot, UDim2.new(1, -18, 0.5, -18/2), nil, nil, 0.2)
+            self.Root:tweenUI(toggleButtonDot, UDim2.new(1, -18, 0.5, -18 / 2), nil, nil, 0.2)
             self.Root:tweenUI(toggleButton, nil, nil, Color3.fromRGB(35, 182, 69), 0.2)
             onStatus = true
         end
@@ -477,7 +503,7 @@ function Dizi:createToggleSwitch (label, callable)
 end
 
 -- tạo dropdown
-function Dizi:createDropdown (label, list, callable)
+function Dizi:createDropdown(label, list, callable)
     local textLabel = Instance.new("TextLabel")
     textLabel.Text = label
     textLabel.Size = UDim2.new(1, 0, 0, 30)
@@ -495,7 +521,7 @@ function Dizi:createDropdown (label, list, callable)
 
     local dropdownButton = Instance.new("TextButton")
     dropdownButton.Size = UDim2.new(0, 100, 0, 20)
-    dropdownButton.Position = UDim2.new(1, -115, 0.5, -20/2)
+    dropdownButton.Position = UDim2.new(1, -115, 0.5, -20 / 2)
     dropdownButton.BackgroundColor3 = Color3.fromRGB(93, 93, 93)
     dropdownButton.Text = "---select---"
     dropdownButton.TextColor3 = Color3.fromRGB(216, 216, 216)
@@ -526,7 +552,9 @@ function Dizi:createDropdown (label, list, callable)
             dropdownButton.Text = key
             dropdownFrame.Parent = nil
             if callable then
-                callable({[key] = value})
+                callable({
+                    [key] = value
+                })
             end
         end)
     end
@@ -536,3 +564,5 @@ function Dizi:createDropdown (label, list, callable)
     end)
 end
 
+
+local DiziGui = Dizi:new()
