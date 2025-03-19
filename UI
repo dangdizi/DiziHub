@@ -535,3 +535,5 @@ function Dizi:createDropdown (label, list, callable)
         dropdownFrame.Parent = dropdownButton
     end)
 end
+
+local Dizi = Dizi:new()
