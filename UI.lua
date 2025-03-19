@@ -536,4 +536,3 @@ function Dizi:createDropdown (label, list, callable)
     end)
 end
 
--- local DiziGui = Dizi:new()
