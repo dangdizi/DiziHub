@@ -2,7 +2,7 @@
 -- Version: D1.0
 -- Author: Dang Dizi
 -- Description: This script will help easy make script layout
-local Dizi = {}
+Dizi = {}
 Dizi.__index = Dizi
 Dizi.Storage = {}
 
