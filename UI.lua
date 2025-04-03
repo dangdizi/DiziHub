@@ -529,7 +529,7 @@ function Dizi:createDropdown(label, list, callable)
     dropdownButton.Parent = textLabel
 
     local dropdownFrame = Instance.new("ScrollingFrame")
-    dropdownFrame.Size = UDim2.new(1, 0, 0, 50)
+    dropdownFrame.Size = UDim2.new(1, 0, 0, 80)
     dropdownFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
     dropdownFrame.Position = UDim2.new(0, 0, 1, 0)
     dropdownFrame.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
@@ -542,18 +542,22 @@ function Dizi:createDropdown(label, list, callable)
     dropdownList.Parent = dropdownFrame
     self.Root:setAutoCanvasSize(dropdownFrame, dropdownList)
 
-    for key, value in pairs(list) do
+    -- ✅ Sửa đúng phần vòng lặp ở đây
+    for _, item in ipairs(list) do
+        local label = item.label or tostring(item)
+        local value = item.value or item
+
         local itemButton = Instance.new("TextButton")
-        itemButton.Text = key
+        itemButton.Text = label
         itemButton.Size = UDim2.new(1, 0, 0, 20)
         itemButton.Parent = dropdownFrame
 
         itemButton.MouseButton1Click:Connect(function()
-            dropdownButton.Text = key
+            dropdownButton.Text = label
             dropdownFrame.Parent = nil
             if callable then
                 callable({
-                    [key] = value
+                    [label] = value
                 })
             end
         end)
