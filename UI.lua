@@ -30,6 +30,7 @@ function Dizi:new()
     local player = game:GetService("Players").LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
     local gui = Instance.new("ScreenGui")
+    gui.ResetOnSpawn = false
     gui.Parent = playerGui
 
     local MiniIcon = Instance.new("ImageButton")
