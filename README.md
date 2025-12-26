@@ -57,8 +57,41 @@ Chúng ta sẽ có các chức năng gồm:
 Dưới đây là một số ví dụ về các chức năng kèm logic cơ bản
 
 ```lua
+-- Tạo label
 TeleportAction:createLabel("Dịch chuyển", Color3.fromRGB(255,255,255))
+
+-- Tạo nút dịch chuyển
 TeleportAction:createButton("Vào sea 1", "Di chuyển", function ()
   print ("Đã thực hiện lệnh vào sea 1")
+end)
+
+-- Tạo ngăn cách
+teleportAction:createHr()
+
+-- Tạo dòng text
+teleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
+
+-- Tạo menu chọn
+teleportAction:createLabel("Dịch chuyển đảo")
+teleportAction:createDropdown("Chọn đảo", {
+  {label = "đảo 1", value = "1"},
+  {label = "đảo 2", value = "2"},
+  {label = "đảo 3", value = "3"},
+}, function (data)
+  print(data.value)
+end)
+
+-- Tạo nút bật tẳt
+local flag = false
+DiziGui:createToggleSwitch("Auto Farm", function (status)
+  flag = status
+  if (status) then
+    while true do
+      if (flag) then
+        print ("Đang Farm")
+        wait(1)
+      end
+    end
+  end
 end)
 ```
