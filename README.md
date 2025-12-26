@@ -83,67 +83,81 @@ end)
 
 -- Tạo nút bật tẳt
 local flag = false
-DiziGui:createToggleSwitch("Auto Farm", function (status)
-  flag = status
-  if (status) then
-    while true do
-      if (flag) then
-        print ("Đang Farm")
-        wait(1)
-      end
+local running = false
+
+TeleportAction:createToggleSwitch("Auto Farm", function(status)
+    flag = status
+
+    if status and not running then
+        running = true
+        task.spawn(function()
+            while flag do
+                print("Đang Farm...")
+                task.wait(1)
+            end
+            running = false
+        end)
     end
-  end
 end)
 ```
 
 #### Dưới đây là tổng hợp code ở trên, các bạn thử copy paste xem có hoạt động không nhé!
 ```lua
+-- Load UI Library
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dangdizi/DiziHub/refs/heads/main/UI-D2.0.lua"))()
+
+-- Tạo GUI
 local DiziGui = Dizi:new()
 
+-- Tạo Action mặc định
 local TeleportAction = DiziGui:createAction(true)
 
+-- Tạo Tab
 local TeleportTab = DiziGui:createTab("rbxassetid://133458018032042", "Teleport")
 TeleportTab:setAction(TeleportAction)
 
+-- ===== UI CONTENT =====
 
--- Tạo label
-TeleportAction:createLabel("Dịch chuyển", Color3.fromRGB(255,255,255))
+-- Label
+TeleportAction:createLabel("Dịch chuyển", Color3.fromRGB(255, 255, 255))
 
--- Tạo nút dịch chuyển
-TeleportAction:createButton("Vào sea 1", "Di chuyển", function ()
-  print ("Đã thực hiện lệnh vào sea 1")
+-- Button
+TeleportAction:createButton("Vào sea 1", "Di chuyển", function()
+    print("Đã thực hiện lệnh vào sea 1")
 end)
 
--- Tạo ngăn cách
+-- HR
 TeleportAction:createHr()
 
--- Tạo dòng text
-TeleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
+-- Text
+TeleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255, 255, 255))
 
--- Tạo menu chọn
-TeleportAction:createLabel("Dịch chuyển đảo", Color3.fromRGB(255,255,255))
+-- Dropdown
+TeleportAction:createLabel("Dịch chuyển đảo", Color3.fromRGB(255, 255, 255))
 TeleportAction:createDropdown("Chọn đảo", {
-  {label = "đảo 1", value = "1"},
-  {label = "đảo 2", value = "2"},
-  {label = "đảo 3", value = "3"},
-}, function (data)
-  print(data.value)
+    { label = "Đảo 1", value = "1" },
+    { label = "Đảo 2", value = "2" },
+    { label = "Đảo 3", value = "3" },
+}, function(data)
+    print("Đã chọn đảo:", data.value)
 end)
 
--- Tạo nút bật tẳt
 local flag = false
-DiziGui:createToggleSwitch("Auto Farm", function (status)
-  flag = status
-  if (status) then
-    while true do
-      if (flag) then
-        print ("Đang Farm")
-        wait(1)
-      end
-    end
-  end
-end)
+local running = false
 
+TeleportAction:createToggleSwitch("Auto Farm", function(status)
+    flag = status
+
+    if status and not running then
+        running = true
+        task.spawn(function()
+            while flag do
+                print("Đang Farm...")
+                task.wait(1)
+            end
+            running = false
+        end)
+    end
+end)
 
 ```
