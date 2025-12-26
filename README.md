@@ -66,14 +66,14 @@ TeleportAction:createButton("Vào sea 1", "Di chuyển", function ()
 end)
 
 -- Tạo ngăn cách
-teleportAction:createHr()
+TeleportAction:createHr()
 
 -- Tạo dòng text
-teleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
+TeleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
 
 -- Tạo menu chọn
-teleportAction:createLabel("Dịch chuyển đảo")
-teleportAction:createDropdown("Chọn đảo", {
+TeleportAction:createLabel("Dịch chuyển đảo")
+TeleportAction:createDropdown("Chọn đảo", {
   {label = "đảo 1", value = "1"},
   {label = "đảo 2", value = "2"},
   {label = "đảo 3", value = "3"},
@@ -116,14 +116,14 @@ TeleportAction:createButton("Vào sea 1", "Di chuyển", function ()
 end)
 
 -- Tạo ngăn cách
-teleportAction:createHr()
+TeleportAction:createHr()
 
 -- Tạo dòng text
-teleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
+TeleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
 
 -- Tạo menu chọn
-teleportAction:createLabel("Dịch chuyển đảo")
-teleportAction:createDropdown("Chọn đảo", {
+TeleportAction:createLabel("Dịch chuyển đảo")
+TeleportAction:createDropdown("Chọn đảo", {
   {label = "đảo 1", value = "1"},
   {label = "đảo 2", value = "2"},
   {label = "đảo 3", value = "3"},
