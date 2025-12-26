@@ -43,3 +43,13 @@ nếu là *true* thì Action sẽ được hiển thị làm trang chủ, khi m�
 local TeleportTab = DiziGui:createTab("rbxassetid://133458018032042", "Teleport")
 TeleportTab:setAction(TeleportAction)
 ```
+
+### 3. Các chức năng tạo Action
+Chúng ta sẽ có các chức năng gồm:
+
+- Tạo dòng text: createText(text, color: Color3)
+- Tạo dòng label: createLabel(text, color: Color3)
+- Tạo dòng ngăn cách: createHr()
+- Tạo nút bật / tắt: createToggleSwitch(label, callble)
+- Tạo nút bấm: createButton(label, text, callble)
+- Tạo menu chọn: createDropdown(label, list: {{label = "quests", value = "result"}}, callable)
