@@ -344,6 +344,51 @@ function Dizi:cleanAction(action)
     end
 end
 
+-- function Dizi:createAction(default)
+--     local actionFrame = Instance.new("ScrollingFrame")
+--     actionFrame.Size = UDim2.new(1, 0, 1, 0)
+--     actionFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+--     actionFrame.ScrollBarThickness = 2
+--     actionFrame.BackgroundTransparency = 1
+--     actionFrame.BorderSizePixel = 0
+
+--     if default then
+--         actionFrame.Parent = self.actionFrame
+--     end
+
+--     local actionFrameList = Instance.new("UIListLayout")
+--     actionFrameList.FillDirection = Enum.FillDirection.Vertical
+--     actionFrameList.SortOrder = Enum.SortOrder.LayoutOrder
+--     actionFrameList.Parent = actionFrame
+
+--     local action = setmetatable({
+--         Frame = actionFrame,
+--         List = actionFrameList,
+--         Root = self,
+--         _layoutOrder = 0
+--     }, Dizi)
+
+--     -- helper tÄƒng LayoutOrder
+--     function action:nextOrder()
+--         self._layoutOrder += 1
+--         return self._layoutOrder
+--     end
+
+--     -- helper update CanvasSize tá»± Ä‘á»™ng
+--     function action:updateCanvas()
+--         local list = self.List
+--         local totalHeight = 0
+--         for _, obj in ipairs(self.Frame:GetChildren()) do
+--             if obj:IsA("GuiObject") then
+--                 totalHeight += obj.Size.Y.Offset
+--             end
+--         end
+--         self.Frame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+--     end
+
+--     return action
+-- end
+
 function Dizi:createAction(default)
     local actionFrame = Instance.new("ScrollingFrame")
     actionFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -358,34 +403,13 @@ function Dizi:createAction(default)
 
     local actionFrameList = Instance.new("UIListLayout")
     actionFrameList.FillDirection = Enum.FillDirection.Vertical
-    actionFrameList.SortOrder = Enum.SortOrder.LayoutOrder
     actionFrameList.Parent = actionFrame
 
     local action = setmetatable({
         Frame = actionFrame,
         List = actionFrameList,
-        Root = self,
-        _layoutOrder = 0
+        Root = self
     }, Dizi)
-
-    -- helper tÄƒng LayoutOrder
-    function action:nextOrder()
-        self._layoutOrder += 1
-        return self._layoutOrder
-    end
-
-    -- helper update CanvasSize tá»± Ä‘á»™ng
-    function action:updateCanvas()
-        local list = self.List
-        local totalHeight = 0
-        for _, obj in ipairs(self.Frame:GetChildren()) do
-            if obj:IsA("GuiObject") then
-                totalHeight += obj.Size.Y.Offset
-            end
-        end
-        self.Frame.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
-    end
-
     return action
 end
 
