@@ -72,7 +72,7 @@ TeleportAction:createHr()
 TeleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
 
 -- Tạo menu chọn
-TeleportAction:createLabel("Dịch chuyển đảo")
+TeleportAction:createLabel("Dịch chuyển đảo", Color3.fromRGB(255,255,255))
 TeleportAction:createDropdown("Chọn đảo", {
   {label = "đảo 1", value = "1"},
   {label = "đảo 2", value = "2"},
@@ -122,7 +122,7 @@ TeleportAction:createHr()
 TeleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
 
 -- Tạo menu chọn
-TeleportAction:createLabel("Dịch chuyển đảo")
+TeleportAction:createLabel("Dịch chuyển đảo", Color3.fromRGB(255,255,255))
 TeleportAction:createDropdown("Chọn đảo", {
   {label = "đảo 1", value = "1"},
   {label = "đảo 2", value = "2"},
