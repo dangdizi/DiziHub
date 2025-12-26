@@ -21,7 +21,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/dangdizi/DiziHub/refs
 local DiziGui = Dizi:new()
 ```
 
-Lúc này, bạn đã có thể nhìn thấy GUI xuất hiện trên màn hình, tiếp theo là một số hàm để bạn có thể thay đổi tùy thích.
+Lúc này, bạn đã có thể nhìn thấy GUI xuất hiện trên màn hình, tiếp theo là một số hàm để bạn có thể thay đổi tùy thích, hoặc bạn có thể bỏ qua để dùng mặc định của UI.
 ```lua
 DiziGui:setTitle("Tên hiển thị trên header của GUI")
 DiziGui:setLogo("Image Id trong roblox")
@@ -94,4 +94,56 @@ DiziGui:createToggleSwitch("Auto Farm", function (status)
     end
   end
 end)
+```
+
+#### Dưới đây là tổng hợp code ở trên, các bạn thử copy paste xem có hoạt động không nhé!
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dangdizi/DiziHub/refs/heads/main/UI-D2.0.lua"))()
+local DiziGui = Dizi:new()
+
+local TeleportAction = DiziGui:createAction(true)
+
+local TeleportTab = DiziGui:createTab("rbxassetid://133458018032042", "Teleport")
+TeleportTab:setAction(TeleportAction)
+
+
+-- Tạo label
+TeleportAction:createLabel("Dịch chuyển", Color3.fromRGB(255,255,255))
+
+-- Tạo nút dịch chuyển
+TeleportAction:createButton("Vào sea 1", "Di chuyển", function ()
+  print ("Đã thực hiện lệnh vào sea 1")
+end)
+
+-- Tạo ngăn cách
+teleportAction:createHr()
+
+-- Tạo dòng text
+teleportAction:createText("Dưới đây là dịch tới vị trí", Color3.fromRGB(255,255,255))
+
+-- Tạo menu chọn
+teleportAction:createLabel("Dịch chuyển đảo")
+teleportAction:createDropdown("Chọn đảo", {
+  {label = "đảo 1", value = "1"},
+  {label = "đảo 2", value = "2"},
+  {label = "đảo 3", value = "3"},
+}, function (data)
+  print(data.value)
+end)
+
+-- Tạo nút bật tẳt
+local flag = false
+DiziGui:createToggleSwitch("Auto Farm", function (status)
+  flag = status
+  if (status) then
+    while true do
+      if (flag) then
+        print ("Đang Farm")
+        wait(1)
+      end
+    end
+  end
+end)
+
+
 ```
