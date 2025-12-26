@@ -47,9 +47,18 @@ TeleportTab:setAction(TeleportAction)
 ### 3. Các chức năng tạo Action
 Chúng ta sẽ có các chức năng gồm:
 
-- Tạo dòng text: createText(text, color: Color3)
-- Tạo dòng label: createLabel(text, color: Color3)
-- Tạo dòng ngăn cách: createHr()
-- Tạo nút bật / tắt: createToggleSwitch(label, callble)
-- Tạo nút bấm: ```lua createButton(label, text, callble)```
-- Tạo menu chọn: ```lua createDropdown(label, list: {{label = "quests", value = "result"}}, callable)```
+- Tạo dòng text: ```createText(text, color: Color3)```
+- Tạo dòng label: ```createLabel(text, color: Color3)```
+- Tạo dòng ngăn cách: ```createHr()```
+- Tạo nút bật / tắt: ```createToggleSwitch(label, callble)```
+- Tạo nút bấm: ```createButton(label, text, callble)```
+- Tạo menu chọn: ```createDropdown(label, list: {{label = "quests", value = "result"}}, callable)```
+
+Dưới đây là một số ví dụ về các chức năng kèm logic cơ bản
+
+```lua
+TeleportAction:createLabel("Dịch chuyển", Color3.fromRGB(255,255,255))
+TeleportAction:createButton("Vào sea 1", "Di chuyển", function ()
+  print ("Đã thực hiện lệnh vào sea 1")
+end)
+```
