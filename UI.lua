@@ -391,6 +391,7 @@ function Dizi:createAction(default)
 
     local actionFrameList = Instance.new("UIListLayout")
     actionFrameList.FillDirection = Enum.FillDirection.Vertical
+    scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
     actionFrameList.Parent = actionFrame
 
     local action = setmetatable({
