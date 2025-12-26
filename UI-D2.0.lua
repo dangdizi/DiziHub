@@ -389,6 +389,30 @@ end
 --     return action
 -- end
 
+-- function Dizi:createAction(default)
+--     local actionFrame = Instance.new("ScrollingFrame")
+--     actionFrame.Size = UDim2.new(1, 0, 1, 0)
+--     actionFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+--     actionFrame.ScrollBarThickness = 2
+--     actionFrame.BackgroundTransparency = 1
+--     actionFrame.BorderSizePixel = 0
+
+--     if default then
+--         actionFrame.Parent = self.actionFrame
+--     end
+
+--     local actionFrameList = Instance.new("UIListLayout")
+--     actionFrameList.FillDirection = Enum.FillDirection.Vertical
+--     actionFrameList.Parent = actionFrame
+
+--     local action = setmetatable({
+--         Frame = actionFrame,
+--         List = actionFrameList,
+--         Root = self
+--     }, Dizi)
+--     return action
+-- end
+
 function Dizi:createAction(default)
     local actionFrame = Instance.new("ScrollingFrame")
     actionFrame.Size = UDim2.new(1, 0, 1, 0)
@@ -396,6 +420,7 @@ function Dizi:createAction(default)
     actionFrame.ScrollBarThickness = 2
     actionFrame.BackgroundTransparency = 1
     actionFrame.BorderSizePixel = 0
+    actionFrame.AutomaticCanvasSize = Enum.AutomaticSize.None
 
     if default then
         actionFrame.Parent = self.actionFrame
@@ -403,15 +428,28 @@ function Dizi:createAction(default)
 
     local actionFrameList = Instance.new("UIListLayout")
     actionFrameList.FillDirection = Enum.FillDirection.Vertical
+    actionFrameList.SortOrder = Enum.SortOrder.LayoutOrder
     actionFrameList.Parent = actionFrame
+
+    -- 🔴 QUAN TRỌNG: cập nhật CanvasSize khi nội dung thay đổi
+    actionFrameList:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        actionFrame.CanvasSize = UDim2.new(
+            0,
+            0,
+            0,
+            actionFrameList.AbsoluteContentSize.Y + 80
+        )
+    end)
 
     local action = setmetatable({
         Frame = actionFrame,
         List = actionFrameList,
         Root = self
     }, Dizi)
+
     return action
 end
+
 
 -- táº¡o text
 function Dizi:createText(text, color)
