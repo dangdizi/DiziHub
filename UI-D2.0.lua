@@ -687,3 +687,27 @@ function Dizi:createHr()
     bottom.BackgroundTransparency = 1
     bottom.Parent = container
 end
+
+-- một số biến có sẵn cho các DEV
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:WaitForChild("Humanoid")
+local dieStatus = false
+
+local function bindHumanoid (humanoid)
+    humanoid.Died:Connect(function()
+        dieStatus = true
+    end)
+end
+
+bindHumanoid(humanoid)
+
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
+    humanoid = newCharacter:WaitForChild("Humanoid")
+    dieStatus = false
+    bindHumanoid(humanoid)
+end)
